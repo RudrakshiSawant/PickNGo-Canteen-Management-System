@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<script type="module">
+    import { auth } from "./firebaseConfig.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    // Check if the user is logged in
+    onAuthStateChanged(auth, user => {
+        if (!user) {
+            // Redirect to login page if not logged in
+            window.location.href = "login.html";
+        }
+    });
+</script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+
+    <!-- Import Firebase Config -->
+    <script src="firebaseConfig.js"></script>
+
+</head>
+
+
+<body class="bg-gray-100" style="background: linear-gradient(45deg, #ff416c, #ff4b2b);">
+</body>
+
+
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl text-center font-semibold mb-8">Food Menu</h1>
+    <div class="grid grid-cols-4 gap-8">
+        <!-- Food Item 1 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/bur.jpeg" alt="Burger" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Burger</h2>
+                <p class="text-gray-700">₹120</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-burger" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-burger" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Burger" data-price="120" data-img="images/bur.jpeg" data-id="burger"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 2 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/chaat.jpeg" alt="Chaat" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Chaat</h2>
+                <p class="text-gray-700">₹50</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-chaat" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-chaat" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Chaat" data-price="50" data-img="images/chaat.jpeg" data-id="chaat"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 3 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/cold-coffee.jpeg" alt="Cold Coffee" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Cold Coffee</h2>
+                <p class="text-gray-700">₹80</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-cold-coffee" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-cold-coffee" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Cold Coffee" data-price="80" data-img="images/cold-coffee.jpeg" data-id="cold-coffee"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 4 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/cold-drink.jpeg" alt="Cold Drinks" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Cold Drinks</h2>
+                <p class="text-gray-700">₹40</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-cold-drinks" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-cold-drinks" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Cold Drinks" data-price="40" data-img="images/cold-drink.jpeg" data-id="cold-drinks"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+
+        <!-- Food Item 5 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/dosa.jpeg" alt="Dosa" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Dosa</h2>
+                <p class="text-gray-700">₹90</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-dosa" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-dosa" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Dosa" data-price="90" data-img="images/dosa.jpeg" data-id="dosa" onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 6 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/fries.jpeg" alt="Fries" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Fries</h2>
+                <p class="text-gray-700">₹60</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-fries" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-fries" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Fries" data-price="60" data-img="images/fries.jpeg" data-id="fries"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 7 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/fruit-plate.jpeg" alt="Fruit Plate" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Fruit Plate</h2>
+                <p class="text-gray-700">₹100</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-fruite-plate" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-fruite-plate" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Fruit Plate" data-price="100" data-img="images/fruit-plate.jpeg" data-id="fruite-plate"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 8 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/hot-coffee.jpeg" alt="Hot Coffee" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Hot Coffee</h2>
+                <p class="text-gray-700">₹60</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-coffee" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-coffee" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Hot Coffee" data-price="60" data-img="images/hot-coffee.jpeg" data-id="coffee"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 9 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/idli.jpeg" alt="Idli" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Idli</h2>
+                <p class="text-gray-700">₹70</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-idli" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-idli" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Idli" data-price="70" data-img="images/idli.jpeg" data-id="idli" onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 10 -->
+        <div class="food-item text-center bg-white p-4 rounded-lg shadow-lg">
+            <a href="food-details.html">
+                <img src="images/lunch-plate.jpeg" alt="Lunch Plate" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Lunch Plate</h2>
+                <p class="text-gray-700">₹150</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-lunch-plate" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-lunch-plate" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Lunch Plate" data-price="150" data-img="images/lunch-plate.jpeg" data-id="lunch-plate"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 11 -->
+        <div class="food-item text-center bg-white p-4 rounded-lg shadow-lg">
+            <a href="food-details.html">
+                <img src="images/maggi.jpeg" alt="Maggi" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Maggi</h2>
+                <p class="text-gray-700">₹60</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-maggi" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-maggi" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Place Order Button -->
+            <button class="place-order mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Maggi" data-price="₹60" data-img="images/maggi.jpeg" data-id="maggi"
+                onclick="addToCart(this)">
+                Add to cart
+            </button>
+        </div>
+
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/sandwich.jpeg" alt="Sandwich" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Sandwich</h2>
+                <p class="text-gray-700">₹70</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-sandwich" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-sandwich" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Sandwich" data-price="70" data-img="images/sandwich.jpeg" data-id="sandwich"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 13 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/tea.jpeg" alt="Tea" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Tea</h2>
+                <p class="text-gray-700">₹20</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-tea" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-tea" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Tea" data-price="20" data-img="images/tea.jpeg" data-id="tea" onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 14 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/wadapav.jpeg" alt="Wadapav" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Wadapav</h2>
+                <p class="text-gray-700">₹50</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-wadapav" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-wadapav" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Wadapav" data-price="50" data-img="images/wadapav.jpeg" data-id="wadapav"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 15 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/poha.jpeg" alt="Poha" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Poha</h2>
+                <p class="text-gray-700">₹40</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-poha" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-poha" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Poha" data-price="40" data-img="images/poha.jpeg" data-id="poha" onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 16 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/roll.jpeg" alt="Roll" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Roll</h2>
+                <p class="text-gray-700">₹80</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-roll" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-roll" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Roll" data-price="80" data-img="images/roll.jpeg" data-id="roll" onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+
+        <!-- Food Item 17 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/lassi.jpeg" alt="Lassi" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Lassi</h2>
+                <p class="text-gray-700">₹50</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-lassi" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-lassi" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Lassi" data-price="50" data-img="images/lassi.jpeg" data-id="lassi"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 18 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/pavbhaji.jpeg" alt="Pav Bhaji" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Pav Bhaji</h2>
+                <p class="text-gray-700">₹60</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-pavbhaji" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-pavbhaji" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Pav Bhaji" data-price="60" data-img="images/pavbhaji.jpeg" data-id="pavbhaji"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 19 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/samosa.jpg" alt="Samosa" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Samosa</h2>
+                <p class="text-gray-700">₹20</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-samosa" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-samosa" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Samosa" data-price="20" data-img="images/samosa.jpg" data-id="samosa"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+
+        <!-- Food Item 20 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/panipuri.jpeg" alt="Pani Puri" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Pani Puri</h2>
+                <p class="text-gray-700">₹30</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-panipuri" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-panipuri" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Pani Puri" data-price="30" data-img="images/panipuri.jpg" data-id="panipuri"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 21 -->
+        <div
+            class=" food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/vada.jpeg" alt="Vada" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Vada</h2>
+                <p class="text-gray-700">₹30</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-vada" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-vada" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Vada" data-price="30" data-img="images/vada.png" data-id="vada" onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 22 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/bhelpuri.jpeg" alt="Bhel Puri" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Bhel Puri</h2>
+                <p class="text-gray-700">₹30</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-bhelpuri" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-bhelpuri" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Bhel Puri" data-price="30" data-img="images/bhelpuri.jpeg" data-id="bhelpuri"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 23 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/sevpuri.jpg" alt="Sev Puri" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Sev Puri</h2>
+                <p class="text-gray-700">₹30</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-sevpuri" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-sevpuri" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Sev Puri" data-price="30" data-img="images/sevpuri.jpg" data-id="sevpuri"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 24 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/cholebhature.jpg" alt="Chole Bhature" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Chole Bhature</h2>
+                <p class="text-gray-700">₹60</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-cholebhature" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-cholebhature" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Chole Bhature" data-price="60" data-img="images/cholebhature.jpg" data-id="cholebhature"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 25 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/alo_tikki.jpeg" alt="Aloo Tikki" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Aloo Tikki</h2>
+                <p class="text-gray-700">₹30</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-alo_tikki" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-alo_tikki" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Aloo Tikki" data-price="30" data-img="images/alo_tikki.jpeg" data-id="alo_tikki"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 26 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/cutlet.jpeg" alt="Cutlet" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Cutlet</h2>
+                <p class="text-gray-700">₹30</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-cutlet" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-cutlet" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Cutlet" data-price="30" data-img="images/cutlet.jpeg" data-id="cutlet"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 27 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/dhokla.jpeg" alt="Dhokla" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Dhokla</h2>
+                <p class="text-gray-700">₹30</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-dhokla" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-dhokla" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Dhokla" data-price="30" data-img="images/dhokla.jpeg" data-id="dhokla"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 28 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/rasmalai.jpg" alt="Rasmalai" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Rasmalai</h2>
+                <p class="text-gray-700">₹20</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-rasmalai" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-rasmalai" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Rasmalai" data-price="20" data-img="images/rasmalai.jpeg" data-id="rasmalai"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 29 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/paneerroll.jpg" alt="Paneer Roll" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Paneer Roll</h2>
+                <p class="text-gray-700">₹30</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-paneer_roll" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-paneer_roll" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Paneer Roll"" data-price=" 30" data-img="images/paneerroll.jpg" data-id="paneer_roll"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 30 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/paneertikka.jpeg" alt="Paneer Tikka" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Paneer Tikka</h2>
+                <p class="text-gray-700">₹40</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-paneertikka" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-paneertikka" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Paneer Tikka" data-price="40" data-img="images/paneertikka.jpeg" data-id="paneertikka"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+
+        <!-- Food Item 31 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/momos.png" alt="Momos" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Momos</h2>
+                <p class="text-gray-700">₹60</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-momos" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-momos" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Momos" data-price="60" data-img="images/momos.png" data-id="momos" onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 32 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/gulabjamun.jpeg" alt="Gulab Jamun" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Gulab Jamun</h2>
+                <p class="text-gray-700">₹20</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-gulabjamun" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-gulabjamun" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Gulab Jamun" data-price="20" data-img="images/gulabjamun.jpeg" data-id="gulabjamun"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 33 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/biryani.png" alt="Biryani" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Biryani</h2>
+                <p class="text-gray-700">₹80</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-biryani" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-biryani" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Biryani" data-price="80" data-img="images/biryani.png" data-id="biryani"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+        <!-- Food Item 34 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/strawberryshake.jpg" alt="Strawberry Shake"
+                    class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Strawberry Shake</h2>
+                <p class="text-gray-700">₹50</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-strawberryshake" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-strawberryshake" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Strawberry Shake" data-price="50" data-img="images/strawberryshake.jpg"
+                data-id="strawberryshake" onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 35 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/mangoshake.jpeg" alt="Mango Shake" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Mango Shake</h2>
+                <p class="text-gray-700">₹50</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-mangoshake" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-mangoshake" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Mango Shake" data-price="50" data-img="images/mangoshake.jpeg" data-id="mangoshake"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 36 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/butterscotchshake.jpg" alt="Butterscotch Shake"
+                    class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Butterscotch Shake</h2>
+                <p class="text-gray-700">₹50</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-butterscotchshake" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-butterscotchshake" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Butterscotch Shake" data-price="50" data-img="images/butterscotchshake.jpg"
+                data-id="butterscotchshake" onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 37 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/chocolateshake.jpg" alt="Chocolate Shake"
+                    class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Chocolate Shake</h2>
+                <p class="text-gray-700">₹50</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-chocolateshake" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-chocolateshake" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Chocolate Shake" data-price="50" data-img="images/chocolateshake.jpg"
+                data-id="chocolateshake" onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 38 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/blueberryshake.jpg" alt="Blueberry Shake"
+                    class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Blueberry Shake</h2>
+                <p class="text-gray-700">₹50</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-blueberryshake" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-blueberryshake" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Blueberry Shake" data-price="50" data-img="images/blueberryshake.jpg"
+                data-id="blueberryshake" onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Food Item 40 -->
+        <div
+            class="food-item text-center bg-white p-4 rounded-lg shadow-lg hover:shadow-blue-500 hover:shadow-2xl hover:scale-105 transition transform duration-300">
+            <a href="food-details.html">
+                <img src="images/mintlemonade.jpeg" alt="Mint Lemonade"
+                    class="w-full h-40 object-cover rounded-lg mb-4">
+                <h2 class="font-semibold text-lg">Mint Lemonade</h2>
+                <p class="text-gray-700">₹30</p>
+            </a>
+
+            <!-- Time Slot Selection -->
+            <label for="time-slot-mintlemonade" class="block mt-2 text-gray-600">Select Time Slot:</label>
+            <select id="time-slot-mintlemonade" class="mt-1 w-full p-2 border border-gray-300 rounded-lg"></select>
+
+            <!-- Add to Cart Button -->
+            <button class="add-to-cart mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600"
+                data-name="Mint Lemonade" data-price="30" data-img="images/mintlemonade.jpeg" data-id="mintlemonade"
+                onclick="addToCart(this)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Cart and User Profile Section -->
+        <div class="fixed top-4 right-4 flex items-center space-x-4">
+            <!-- Cart Button -->
+            <button onclick="toggleCart()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                🛒 View Cart (<span id="cart-count">0</span>)
+            </button>
+
+            <!-- User Profile Dropdown -->
+            <div class="relative">
+                <button onclick="toggleProfileMenu()"
+                    class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900">
+                    👤 Profile
+                </button>
+                <div id="profile-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg hidden">
+                    <p class="px-4 py-2 text-gray-800 font-semibold" id="user-email">user@example.com</p>
+                    <hr>
+                    <button onclick="showOrderHistory()"
+                        class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200">
+                        📜 Order History
+                    </button>
+                    <button onclick="logout()" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-200">
+                        🚪 Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Order History Modal -->
+            <div id="order-history-modal"
+                class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center">
+                <div class="bg-white p-6 rounded-lg shadow-lg w-130">
+                    <h2 class="text-xl font-semibold mb-2">Order History</h2>
+                    <div id="order-history" class="max-h-60 overflow-y-auto"></div>
+                    <button onclick="closeOrderHistory()"
+                        class="mt-4 w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+                        Close
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cart Modal (Initially Hidden) -->
+            <div id="cart-modal"
+                class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center">
+                <div class="bg-white p-6 rounded-lg shadow-lg w-130">
+                    <h2 class="text-xl font-semibold mb-2">Your Cart</h2>
+                    <div id="cart-items" class="max-h-60 overflow-y-auto"></div>
+                    <button onclick="checkout()"
+                        class="mt-4 w-full bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                        Proceed to Checkout
+                    </button>
+                    <button onclick="toggleCart()"
+                        class="mt-2 w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+                        Close Cart
+                    </button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <style>
+        /* foodliststyle.css */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .food-item img {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .food-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .food-item h2 {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .food-item p {
+            font-size: 1rem;
+            margin-top: 5px;
+            color: #333;
+        }
+
+        .blurred {
+            filter: blur(4px);
+            pointer-events: none;
+        }
+    </style>
+
+
+    <script>
+        function toggleCart() {
+            let cartModal = document.getElementById("cart-modal");
+            cartModal.classList.toggle("hidden");
+        }
+
+        function toggleProfileMenu() {
+            let menu = document.getElementById("profile-menu");
+            menu.classList.toggle("hidden");
+        }
+        function showOrderHistory() {
+            let modal = document.getElementById("order-history-modal");
+            let mainContent = document.getElementById("main-content"); // Main content wrapper
+
+            if (!modal || !mainContent) {
+                console.error("Modal or Main Content not found!");
+                return;
+            }
+
+            modal.classList.remove("hidden");
+            mainContent.classList.add("blurred-background"); // Blur only the background
+            loadOrderHistory();
+        }
+
+        function closeOrderHistory() {
+            let modal = document.getElementById("order-history-modal");
+            let mainContent = document.getElementById("main-content");
+
+            if (modal) {
+                modal.classList.add("hidden");
+            }
+
+            if (mainContent) {
+                mainContent.classList.remove("blurred-background");
+            }
+        }
+
+    function logout() {
+        window.location.href = "IndexPage.html";  // ✅ Redirect to login page
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", logout);
+
+
+
+        function loadOrderHistory() {
+            let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
+            let historyContainer = document.getElementById("order-history");
+            historyContainer.innerHTML = orderHistory.length === 0
+                ? "<p>No previous orders found.</p>"
+                : orderHistory.map(order => `<p>${order}</p>`).join("");
+        }
+
+        // Load User Email (Example)
+        document.getElementById("user-email").innerText = localStorage.getItem("userEmail") || "Guest";
+    </script>
+
+
+    <script>
+        let cart = [];
+
+        // Function to add item to cart
+        function addToCart(button) {
+            let itemName = button.getAttribute("data-name");
+            let itemPrice = button.getAttribute("data-price");
+            let itemImage = button.getAttribute("data-img");
+            let itemId = button.getAttribute("data-id");
+            let timeSlot = document.getElementById("time-slot-" + itemId).value;  // Get the selected time slot for this specific item
+
+            // Add item with time slot to cart
+            cart.push({
+                name: itemName,
+                price: itemPrice,
+                img: itemImage,
+                timeSlot: timeSlot,
+                id: itemId  // Use itemId to identify the item uniquely
+            });
+
+            // Update cart count
+            updateCartCount();
+        }
+
+        // Function to update cart count
+        function updateCartCount() {
+            document.getElementById("cart-count").innerText = cart.length;
+        }
+
+        // Function to toggle cart modal visibility
+        function toggleCart() {
+            let cartModal = document.getElementById("cart-modal");
+            cartModal.classList.toggle("hidden");
+            updateCart();
+        }
+
+        // Function to update the cart display dynamically
+        function updateCart() {
+            let cartContainer = document.getElementById("cart-items");
+            cartContainer.innerHTML = ""; // Clear previous items
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = "<p class='text-gray-500'>Your cart is empty.</p>";
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                let itemElement = document.createElement("div");
+                itemElement.classList.add("flex", "justify-between", "items-center", "p-2", "border-b");
+                itemElement.innerHTML = `
+            <img src="${item.img}" class="w-12 h-12 rounded-md" />
+            <span>${item.name}</span>
+            <span>₹${item.price}</span>
+            <span>Time Slot: ${item.timeSlot}</span>
+            <button class="text-red-500" onclick="removeFromCart(${index})">Remove</button>
+        `;
+                cartContainer.appendChild(itemElement);
+            });
+        }
+
+        // Function to remove an item from the cart
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+            updateCartCount();
+        }
+
+        // Function to proceed to checkout
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            // Save cart data in localStorage
+            localStorage.setItem("cartData", JSON.stringify(cart));
+
+            // Redirect to bill.html
+            window.location.href = "bill.html";
+        }
+
+        
+
+        function generateTimeSlots(selectElementId) {
+            const now = new Date();
+            const select = document.getElementById(selectElementId);
+            select.innerHTML = ""; // Clear previous options
+
+            // Round up to the nearest 15-minute mark
+            let minutes = now.getMinutes();
+            let remainder = minutes % 15;
+            if (remainder !== 0) {
+                now.setMinutes(minutes + (15 - remainder)); // Adjust to the next 15-minute slot
+            }
+
+            for (let i = 0; i < 4; i++) {
+                let hours = now.getHours();
+                let minutes = now.getMinutes();
+                let ampm = hours >= 12 ? 'PM' : 'AM';
+
+                // Convert to 12-hour format
+                hours = hours % 12 || 12;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+
+                const timeSlot = `${hours}:${minutes} ${ampm}`;
+                const option = document.createElement("option");
+                option.value = timeSlot;
+                option.textContent = timeSlot;
+                select.appendChild(option);
+
+                // Move to next 15-minute interval
+                now.setMinutes(now.getMinutes() + 15);
+            }
+        }
+
+        // Call the function for the burger time slot dropdown
+        generateTimeSlots("time-slot-burger");
+        generateTimeSlots("time-slot-chaat");
+        generateTimeSlots("time-slot-cold-coffee");
+        generateTimeSlots("time-slot-cold-drinks");
+        generateTimeSlots("time-slot-dosa");
+        generateTimeSlots("time-slot-fries");
+        generateTimeSlots("time-slot-fruite-plate");
+        generateTimeSlots("time-slot-coffee");
+        generateTimeSlots("time-slot-idli");
+        generateTimeSlots("time-slot-lunch-plate");
+        generateTimeSlots("time-slot-maggi");
+        generateTimeSlots("time-slot-sandwich");
+        generateTimeSlots("time-slot-tea");
+        generateTimeSlots("time-slot-wadapav");
+        generateTimeSlots("time-slot-poha");
+        generateTimeSlots("time-slot-roll");
+        generateTimeSlots("time-slot-lassi");
+        generateTimeSlots("time-slot-samosa");
+        generateTimeSlots("time-slot-pavbhaji");
+        generateTimeSlots("time-slot-panipuri");
+        generateTimeSlots("time-slot-vada");
+        generateTimeSlots("time-slot-bhelpuri");
+        generateTimeSlots("time-slot-sevpuri");
+        generateTimeSlots("time-slot-cholebhature");
+        generateTimeSlots("time-slot-alo_tikki");
+        generateTimeSlots("time-slot-cutlet");
+        generateTimeSlots("time-slot-dhokla");
+        generateTimeSlots("time-slot-rasmalai");
+        generateTimeSlots("time-slot-paneer_roll");
+        generateTimeSlots("time-slot-paneertikka");
+        generateTimeSlots("time-slot-momos");
+        generateTimeSlots("time-slot-gulabjamun");
+        generateTimeSlots("time-slot-biryani");
+        generateTimeSlots("time-slot-strawberryshake");
+        generateTimeSlots("time-slot-mangoshake");
+        generateTimeSlots("time-slot-butterscotchshake");
+        generateTimeSlots("time-slot-chocolateshake");
+        generateTimeSlots("time-slot-blueberryshake");
+        generateTimeSlots("time-slot-mintlemonade");
+
+    </script>
+
+    <script>
+        import { auth } from "./firebaseConfig.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // Redirect if user is not logged in
+        onAuthStateChanged(auth, user => {
+            if (!user) {
+                window.location.href = "login.html";
+            }
+        });
+
+        const foodItems = [
+            { name: "Burger", price: 120, img: "images/burger.jpg" },
+            { name: "Chaat", price: 50, img: "images/chaat.jpg" },
+            { name: "Cold Coffee", price: 80, img: "images/cold-coffee.jpg" },
+            { name: "Cold Drinks", price: 40, img: "images/cold-drinks.jpg" },
+            { name: "Dosa", price: 90, img: "images/dosa.jpg" },
+            { name: "Fries", price: 60, img: "images/fries.jpg" },
+            { name: "Fruit Plate", price: 100, img: "images/fruit-plate.jpg" },
+            { name: "Hot Coffee", price: 60, img: "images/hot-coffee.jpg" },
+            { name: "Idli", price: 30, img: "images/idli.jpg" },
+            { name: "Lunch Plate", price: 150, img: "images/lunch-plate.jpg" },
+            { name: "Maggi", price: 60, img: "images/maggi.jpg" },
+            { name: "Sandwich", price: 70, img: "images/sandwich.jpg" },
+            { name: "Tea", price: 20, img: "images/tea.jpg" },
+            { name: "Wadapav", price: 50, img: "images/wadapav.jpg" },
+            { name: "Samosa", price: 20, img: "images/samosa.jpg" }
+
+
+        ];
+
+        const foodList = document.getElementById("food-list");
+
+        // Populate food items dynamically
+        foodItems.forEach(item => {
+            const foodDiv = document.createElement("div");
+            foodDiv.className = "food-item text-center bg-white p-4 rounded-lg shadow-lg";
+
+            foodDiv.innerHTML = `
+        <a href="food-details.html">
+            <img src="${item.img}" alt="${item.name}" class="w-full h-40 object-cover rounded-lg mb-4">
+            <h2 class="font-semibold text-lg">${item.name}</h2>
+            <p class="text-gray-700">₹${item.price}</p>
+        </a>
+        <label for="time-slot-${item.name}" class="block mt-2 text-sm font-medium text-gray-700">Select Time Slot:</label>
+        <select id="time-slot-${item.name}" class="mt-1 p-2 border rounded w-full">
+            <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
+            <option value="11:00 AM - 12:00 PM">11:00 AM - 12:00 PM</option>
+            <option value="12:00 PM - 01:00 PM">12:00 PM - 01:00 PM</option>
+            <option value="01:00 PM - 02:00 PM">01:00 PM - 02:00 PM</option>
+        </select>
+        <button class="place-order-btn mt-4 px-4 py-2 bg-blue-500 text-white rounded w-full hover:bg-blue-700">Place Order</button>
+    `;
+            foodList.appendChild(foodDiv);
+        });
+
+    </script>
+    </body>
+
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrolling Webpage</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray(".section").forEach((section, index) => {
+            gsap.fromTo(section,
+                { opacity: 0, y: 50 },
+                {
+                    opacity: 1, y: 0, duration: 1.5, ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 90%",
+                        toggleActions: "play none none none"
+                    }
+                }
+            );
+        });
+
+        gsap.utils.toArray(".navbar a").forEach(link => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute("href"));
+                gsap.to(window, { duration: 1.2, scrollTo: target, ease: "power2.inOut" });
+            });
+        });
+    </script>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+        }
+
+        /* Floating Navbar */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(6, 6, 6, 0.7);
+            padding: 3px 20px;
+            border-radius: 50px;
+            display: flex;
+            gap: 25px;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .navbar a:hover {
+            background: rgba(255, 75, 43, 0.8);
+        }
+
+        /* Section Styling */
+        .section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            transition: all 0.8s ease-in-out;
+        }
+
+        #home,
+        #about,
+        #services,
+        #contact {
+            background: linear-gradient(to bottom, rgba(6, 6, 6, 0.9), rgba(255, 255, 255, 0.8));
+            transition: background 1s ease-in-out;
+        }
+
+
+        #home {
+            background: url('images/r\ \(5\).png') no-repeat center center/cover;
+        }
+
+        #about {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+        }
+
+        #services-contact {
+            background: linear-gradient(50deg, #d5fc79ae, #96e6a1);
+        }
+
+
+        /* Get Started Button */
+        .btn {
+            display: inline-block;
+            padding: 20px 45px;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            margin-top: 170px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(255, 75, 43, 0.4);
+        }
+
+        /* Team Section */
+        .team-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding: 40px 0;
+        }
+
+        .team-card {
+            background: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 280px;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Ensures vertical alignment */
+            text-align: center;
+        }
+
+        .team-card:hover,
+        .team-card:focus-within {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-card img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: -2px;
+            align-self: center;
+            /* This ensures horizontal centering */
+        }
+
+
+        .team-card h4 {
+            font-size: 25px;
+            font-weight: bold;
+            color: #1E3A8A;
+            margin-top: 15px;
+        }
+
+        .team-card p {
+            color: gray;
+            font-size: 35px;
+        }
+
+        .social-icons {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            font-size: 22px;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="#home"><i class="fas fa-home"></i> Home</a>
+        <a href="#about"><i class="fas fa-user"></i> About</a>
+        <a href="#services"><i class="fas fa-cogs"></i> Services</a>
+    </div>
+
+    <!-- Sections -->
+    <div id="home" class="section">
+        <a href="IndexPage.html" class="btn">Get Started</a>
+    </div>
+
+    <div id="about" class="section">
+        <div>
+            <h2 class="text-5xl font-bold text-white mb-10">Meet Our Team</h2>
+            <div class="team-container">
+                <!-- Team Member 1 -->
+                <div class="team-card">
+                    <img src="images/pfp3.jpg" alt="Rudrakshi Sawant">
+                    <h4>Rudrakshi Sawant</h4>
+                    <p>Lead Developer</p>
+                    <div class="social-icons">
+                        <a href="https://github.com/RudrakshiSawant" target="_blank" class="text-gray-700">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/rudrakshi-sawant-76192a250/?originalSubdomain=in"
+                            target="_blank" class="text-blue-600">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Team Member 2 -->
+                <div class="team-card">
+                    <img src="images/shubhangi.png" alt="Jane Smith">
+                    <h4>Shubhangi Kale</h4>
+                    <p>Database Engineer</p>
+                    <div class="social-icons">
+                        <a href="https://github.com/Shubhangi214" target="_blank" class="text-gray-700">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/shubhangi-kale-42b824295?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                            target="_blank" class="text-blue-600">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Team Member 3 -->
+                <div class="team-card">
+                    <img src="images/bisht2.png" alt="Michael Lee">
+                    <h4>Ananya Bisht</h4>
+                    <p>UI/UX Designer</p>
+                    <div class="social-icons">
+                        <a href="https://github.com/Ananya-B1sht" target="_blank" class="text-gray-700">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ananya-bisht-134470319?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                            target="_blank" class="text-blue-600">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Services and Contact Section -->
+    <section id="services-contact" class="py-16 bg-gray-50">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 p-6">
+            <!-- Box 1: Pre-Order Meals -->
+            <div class="p-6 bg-white shadow-lg rounded-lg text-gray-800">
+                <i class="fas fa-calendar-check text-5xl mb-4 animate-bounce"></i>
+                <h3 class="text-2xl font-semibold mb-3">Pre-Order Meals</h3>
+                <p class="mb-4">Order your meals in advance for a hassle-free experience, ensuring that your food is ready when you need it.</p>
+                <ul class="text-gray-800 text-left mt-3 space-y-2">
+                    <li>✔ Browse diverse meal options</li>
+                    <li>✔ Place orders ahead of time</li>
+                    <li>✔ Ensure timely meal preparation</li>
+                    <li>✔ Eliminate long wait times</li>
+                </ul>
+            </div>
+        
+            <!-- Box 2: Customizable Time Slots -->
+            <div class="p-6 bg-white shadow-lg rounded-lg text-gray-800">
+                <i class="fas fa-clock text-5xl mb-4 animate-bounce"></i>
+                <h3 class="text-2xl font-semibold mb-3">Customizable Time Slots</h3>
+                <p class="mb-4">Choose your preferred time slot for meal pick-up to suit your schedule and avoid unnecessary waiting.</p>
+                <ul class="text-gray-800 text-left mt-3 space-y-2">
+                    <li>✔ Select the best time for pickup</li>
+                    <li>✔ Skip the line and save time</li>
+                    <li>✔ Pick-up your meal when it’s convenient</li>
+                    <li>✔ Flexible scheduling for busy days</li>
+                </ul>
+            </div>
+        
+            <!-- Box 3: Reliable Service -->
+            <div class="p-6 bg-white shadow-lg rounded-lg text-gray-800">
+                <i class="fas fa-check-circle text-5xl mb-4 animate-bounce"></i>
+                <h3 class="text-2xl font-semibold mb-3">Reliable Service</h3>
+                <p class="mb-4">We ensure consistent, punctual service so that your meals are always delivered on time and in perfect condition.</p>
+                <ul class="text-gray-800 text-left mt-3 space-y-2">
+                    <li>✔ Dependable and timely delivery</li>
+                    <li>✔ Consistent quality and service</li>
+                    <li>✔ On-time order fulfillment</li>
+                    <li>✔ Trustworthy and efficient process</li>
+                </ul>
+            </div>
+        
+            <!-- Box 4: User-Friendly Interface -->
+            <div class="p-6 bg-white shadow-lg rounded-lg text-gray-800">
+                <i class="fas fa-user-friends text-5xl mb-4 animate-bounce"></i>
+                <h3 class="text-2xl font-semibold mb-3">User-Friendly Interface</h3>
+                <p class="mb-4">Our platform offers an intuitive and easy-to-use interface, making food ordering a smooth and simple process.</p>
+                <ul class="text-gray-800 text-left mt-3 space-y-2">
+                    <li>✔ Simple navigation</li>
+                    <li>✔ Fast and easy order placement</li>
+                    <li>✔ Clear, intuitive design</li>
+                    <li>✔ Effortless order tracking</li>
+                </ul>
+            </div>
+        </div>
+         
+    </section>
+
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+
+</body>
+
+</html>
